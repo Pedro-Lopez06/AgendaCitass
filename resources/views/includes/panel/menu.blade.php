@@ -8,17 +8,17 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link " href="./examples/icons.html">
+        <a class="nav-link " href="{{ url('/especialidades') }}">
             <i class="ni ni-briefcase-24 text-blue"></i> Especialidades
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link " href="./examples/maps.html">
+        <a class="nav-link " href="{{ url('/medicos') }}">
             <i class="fa fa-stethoscope text-info"></i> Médicos
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link " href="./examples/profile.html">
+        <a class="nav-link " href="/pacientes">
             <i class="fas fa-bed text-warning"></i> Pacientes
         </a>
     </li>

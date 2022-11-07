@@ -57,7 +57,7 @@
                     @include('includes.panel.userOptions')
                 </li>
             </ul>
-            <!-- Collapse -->
+        <!-- Collapse -->
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <!-- Collapse header -->
                 <div class="navbar-collapse-header d-md-none">
@@ -121,7 +121,7 @@
         <!-- End Navbar -->
         <!-- Header -->
         <div class="header bg-gradient-primary pb-8 pt-4 pt-md-6">
-            
+
         </div>
         <div class="container-fluid mt--7">
             @yield('content')
