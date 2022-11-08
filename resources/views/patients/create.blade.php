@@ -1,3 +1,7 @@
+<?php
+use Illuminate\Support\Str;
+?>
+
 @extends('layouts.panel')
 
 @section('content')
@@ -41,12 +45,16 @@
                         <input type="text" name="cedula" class="form-control" value="{{ old('cedula') }}">
                     </div>
                     <div class="form-group">
-                        <label for="direccion">Direccion</label>
-                        <input type="text" name="direccion" class="form-control" value="{{ old('direccion') }}">
+                        <label for="address">Direccion</label>
+                        <input type="text" name="address" class="form-control" value="{{ old('address') }}">
                     </div>
                     <div class="form-group">
-                        <label for="telefono">Telefono / Movil</label>
-                        <input type="text" name="telefono" class="form-control" value="{{ old('telefono') }}">
+                        <label for="phone">Telefono / Movil</label>
+                        <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="text" name="password" class="form-control" value="{{ old('password', Str::random(8)) }}">
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary">Crear Paciente</button>
                 </form>
