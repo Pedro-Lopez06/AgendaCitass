@@ -1,9 +1,18 @@
 <!-- Heading -->
-<h6 class="navbar-heading text-muted">Gestion</h6>
+<h6 class="navbar-heading text-muted">
+    @if(auth()->user()->role == 'admin')
+        Gestion
+    @else
+        Menú
+    @endif
+
+</h6>
 <!-- Navigation -->
 <ul class="navbar-nav">
+
+    @if(auth()->user()->role == 'admin')
     <li class="nav-item  active ">
-        <a class="nav-link  active " href="./index.html">
+        <a class="nav-link  active " href="/home">
             <i class="ni ni-tv-2 text-danger"></i> Dashboard
         </a>
     </li>
@@ -22,6 +31,35 @@
             <i class="fas fa-bed text-warning"></i> Pacientes
         </a>
     </li>
+    @elseif(auth()->user()->role == 'doctor')
+    <li class="nav-item">
+        <a class="nav-link " href="">
+            <i class="ni ni-calendar-grid-58 text-primary"></i> Gestionar Horario
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="">
+            <i class="fas fa-clock text-yellow"></i> Mis Citas
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="">
+            <i class="fas fa-bed text-danger"></i> Mis Pacientes
+        </a>
+     </li>
+    @else
+    <li class="nav-item">
+        <a class="nav-link " href="">
+            <i class="ni ni-calendar-grid-58 text-orange"></i> Reservar Cita
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="">
+            <i class="fas fa-clock text-success"></i> Mis Citas
+        </a>
+    </li>     
+    @endif
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('logout') }}"
             onclick="event.preventDefault(); document.getElementById('formLogout').submit();">
@@ -32,6 +70,8 @@
         </form>
     </li>
 </ul>
+
+@if(auth()->user()->role == 'admin')
 <!-- Divider -->
 <hr class="my-3">
 <!-- Heading -->
@@ -49,3 +89,4 @@
         </a>
     </li>
 </ul>
+@endif
