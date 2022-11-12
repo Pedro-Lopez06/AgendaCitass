@@ -43,3 +43,6 @@ Route::middleware(['auth', 'doctor'])->group(function () {
     Route::post('/horario', [App\Http\Controllers\doctor\HorarioController::class, 'store']);
 
 });
+
+Route::get('/reservarcita/create', [App\Http\Controllers\AppointmentController::class, 'create']);
+Route::post('/miscitas', [App\Http\Controllers\AppointmentController::class, 'store']);
