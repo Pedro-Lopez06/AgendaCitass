@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Speciality;
 use Illuminate\Http\Request;
 use Laravel\Ui\Presets\React;
+use App\Http\Controllers\Controller;
 
 class SpecialityController extends Controller
 {
     public function index(){
         $specialities = Speciality::all();
         return view('specialities.index', compact('specialities'));
-    }
-
-    public function __construct(){
-        $this->middleware('auth');
     }
 
     public function create(){
