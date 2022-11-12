@@ -37,3 +37,8 @@ Route::resource('medicos','App\Http\Controllers\admin\DoctorController');
 // Rutas Pacientes
 Route::resource('pacientes','App\Http\Controllers\admin\PatientController');
 });
+
+Route::middleware(['auth', 'doctor'])->group(function () {
+    Route::get('/horario', [App\Http\Controllers\doctor\HorarioController::class, 'edit']);
+
+});
