@@ -40,5 +40,6 @@ Route::resource('pacientes','App\Http\Controllers\admin\PatientController');
 
 Route::middleware(['auth', 'doctor'])->group(function () {
     Route::get('/horario', [App\Http\Controllers\doctor\HorarioController::class, 'edit']);
+    Route::post('/horario', [App\Http\Controllers\doctor\HorarioController::class, 'store']);
 
 });

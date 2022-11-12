@@ -10,6 +10,7 @@
 <!-- Navigation -->
 <ul class="navbar-nav">
 
+<!-- Rol Admin -->
     @if(auth()->user()->role == 'admin')
     <li class="nav-item  active ">
         <a class="nav-link  active " href="/home">
@@ -31,8 +32,8 @@
             <i class="fas fa-bed text-warning"></i> Pacientes
         </a>
     </li>
-    @elseif(auth()->user()->role == 'doctor')
-    <li class="nav-item">
+    @elseif(auth()->user()->role == 'doctor') <!-- Rol Doctor -->
+    <li class="nav-item"> 
         <a class="nav-link " href="/horario">
             <i class="ni ni-calendar-grid-58 text-primary"></i> Gestionar Horario
         </a>
@@ -48,6 +49,7 @@
         </a>
      </li>
     @else
+    <!-- Rol Paciente -->
     <li class="nav-item">
         <a class="nav-link " href="">
             <i class="ni ni-calendar-grid-58 text-orange"></i> Reservar Cita
