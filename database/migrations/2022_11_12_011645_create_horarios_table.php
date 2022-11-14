@@ -14,7 +14,7 @@ class CreateHorariosTable extends Migration
     public function up()
     {
         Schema::create('horarios', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedSmallInteger('day');
             $table->boolean('active');
             $table->time('morning_start');
@@ -22,7 +22,7 @@ class CreateHorariosTable extends Migration
             $table->time('afternoon_start');
             $table->time('afternoon_end');
 
-            $table->unsignedSmallInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps('');
