@@ -38,7 +38,7 @@ class User extends Authenticatable
     ];
 
     public function specialties(){
-        return $this->belongsToMany(Speciality::class);
+        return $this->belongsToMany(Speciality::class)->withTimestamps();
     }
 
     /**

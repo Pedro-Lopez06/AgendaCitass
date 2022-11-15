@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Speciality;
 
 use function Ramsey\Uuid\v1;
 
@@ -28,7 +29,8 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('doctors.create');
+        $specialties = Speciality::all();
+        return view('doctors.create', compact('specialties'));
     }
 
     /**
@@ -39,6 +41,7 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
+   
         $rules = [
             'name' => 'required|min:3',
             'email' => 'required|email',
@@ -59,13 +62,15 @@ class DoctorController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        User::create(
+        $user = User::create(
             $request->only('name','email','cedula','address','phone')
             +[
                 'role' => 'doctor' ,
                 'password' => bcrypt($request->input('password'))
             ]
         );
+        $user -> specialties()->attach($request->input('specialties'));
+
         $notification = "El medico se a registrado correctamente";
         return redirect('/medicos')->with(compact('notification'));
     }
@@ -90,7 +95,9 @@ class DoctorController extends Controller
     public function edit($id)
     {
         $doctor = User::doctors()->findOrFail($id);
-        return view('doctors.edit', compact('doctor'));
+        $specialties = Speciality::all();
+        $specialty_ids = $doctor->specialties()->pluck('specialities.id');
+        return view('doctors.edit', compact('doctor', 'specialties', 'specialty_ids'));
     }
 
     public function update(Request $request, $id)
@@ -124,6 +131,7 @@ class DoctorController extends Controller
 
         $user->fill($data);
         $user->save();
+        $user->specialties()->sync($request->input('specialties'));
 
         $notification = "La informacion de medico se a actualizado correctamente";
         return redirect('/medicos')->with(compact('notification'));
