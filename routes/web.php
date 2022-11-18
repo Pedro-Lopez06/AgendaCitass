@@ -49,5 +49,6 @@ Route::middleware('auth')->group(function(){
     Route::post('/miscitas', [App\Http\Controllers\AppointmentController::class, 'store']);
     //JSON
     Route::get('/especialidades/{specialty}/medicos', [App\Http\Controllers\Api\SpecialtyController::class, 'doctors']);
-
+    ///va de nuevo
+    
 });
