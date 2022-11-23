@@ -13,7 +13,7 @@ class CreateSpecialtyUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('specialty_user', function (Blueprint $table) {
+        Schema::create('speciality_user', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             //Doctor
@@ -21,8 +21,9 @@ class CreateSpecialtyUserTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             //Specialty
-            $table->unsignedBigInteger('specialty_id');
-            $table->foreign('specialty_id')->references('id')->on('specialities')->onDelete('cascade');
+            $table->unsignedBigInteger('speciality_id');
+            $table->foreign('speciality_id')->references('id')->on('specialities')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

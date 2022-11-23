@@ -46,8 +46,10 @@ Route::middleware(['auth', 'doctor'])->group(function () {
 
 Route::middleware('auth')->group(function(){
     Route::get('/reservarcita/create', [App\Http\Controllers\AppointmentController::class, 'create']);
-    Route::post('/miscitas', [App\Http\Controllers\AppointmentController::class, 'store']);
+    Route::post('/reservarcitas', [App\Http\Controllers\AppointmentController::class, 'store']);
+    Route::post('/miscitas', [App\Http\Controllers\AppointmentController::class, 'index']);
     //JSON
     Route::get('/especialidades/{specialty}/medicos', [App\Http\Controllers\Api\SpecialtyController::class, 'doctors']);
+    Route::get('/horario/horas', [App\Http\Controllers\Api\HorarioController::class, 'hours']);
 
 });

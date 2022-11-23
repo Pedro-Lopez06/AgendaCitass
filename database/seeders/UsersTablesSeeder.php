@@ -22,7 +22,7 @@ class UsersTablesSeeder extends Seeder
             'cedula'=> '0465555550',
             'address'=> 'nose',
             'phone'=>'3318825712',
-            'role'=>'admin',
+            'role'=>'admin'
         ]);
         User::create([
             'name' => 'paciente1',
@@ -36,7 +36,7 @@ class UsersTablesSeeder extends Seeder
             'email' => 'medico1@gmail.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'), // password
-            'role'=>'doctor',
+            'role'=>'doctor'
         ]);
 
         User::factory()

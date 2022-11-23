@@ -17,11 +17,11 @@ class HorarioController extends Controller
     ];
 
     public function edit(){
-        
+
         $horarios = Horarios::where('user_id', auth()->id())->get();
 
         if(count($horarios) >0){
-             $horarios->map(function($horarios){
+            $horarios->map(function($horarios){
             $horarios->morning_start = (new Carbon($horarios->morning_start))->format('g:i A');
             $horarios->morning_end = (new Carbon($horarios->morning_end))->format('g:i A');
             $horarios->afternoon_start = (new Carbon($horarios->afternoon_start))->format('g:i A');
@@ -34,14 +34,12 @@ class HorarioController extends Controller
         }
 
 
-       
-
         $days = $this->days;
 
         return view('horario', compact('days', 'horarios'));
     }
     public function store(Request $request){
-        
+
 
         $active = $request ->input('active') ?:[];
         $morning_start = $request -> input('morning_start');

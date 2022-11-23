@@ -30,43 +30,84 @@ use Illuminate\Support\Str;
                 @endforeach
             @endif
 
-                <form action="{{ url('/pacientes') }}" method="POST">
+                <form action="{{ url('/reservarcitas') }}" method="POST">
                     @csrf
-                    <div class="form-group">
-                        <label for="specialty">Especialidad</label>
-                        <select name="specialty_id" id="specialty" class="from-control">
-                            <option value="">Seleccionar especialidad</option>
-                            @foreach ($specialties as $especialidad)
-                                <option value="{{ $especialidad->id }}">{{ $especialidad->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="doctor">Médico</label>
-                        <select name="doctor_id" id="doctor" class="from-control">
 
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="specialty">Especialidad</label>
+                            <select name="specialty_id" id="specialty" class="form-control">
+                                <option value="">Seleccionar especialidad</option>
+                                @foreach ($specialties as $especialidad)
+                                    <option value="{{ $especialidad->id }}">{{ $especialidad->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="doctor">Médico</label>
+                            <select name="doctor_id" id="doctor" class="form-control" required>
+                            </select>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="cedula">Fecha</label>
+                        <label for="date">Fecha</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                             </div>
-                            <input class="form-control datepicker" placeholder="Seleccionar Fecha" 
+                            <input class="form-control datepicker"
+                            id="date" name="scheduled_date"
+                            placeholder="Seleccionar Fecha"
                             type="text" value="{{ date('Y-m-d') }}" data-date-format="yyyy-mm-dd"
                             data-date-start-date="{{ date('Y-m-d') }}" data-date-end-date="+30d">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="address">Hora de atención</label>
-                        <input type="text" name="address" class="form-control" value="{{ old('address') }}">
+                        <label for="hours">Hora de atención</label>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h4 class="m-3" id="titleMorning"></h4>
+                                    <div id="hoursMorning">
+                                        <mark>
+                                            <small class="text-warning" display-5>
+                                                Selecciona un médico y una fecha para ver las horas.
+                                            </small>
+                                        </mark>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h4 class="m-3" id="titleAfternoon"></h4>
+                                    <div id="hoursAfternoon"></div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Tipo de consulta</label>
-                        <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
+                        <label>Tipo de consulta</label>
+                        <div class="custom-control custom-radio mt-3 mb-3">
+                            <input type="radio" id="type1" name="type" class="custom-control-input" value="Consulta">
+                            <label class="custom-control-label" for="type1">Consulta</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-3">
+                            <input type="radio" id="type2" name="type" class="custom-control-input" value="Examen">
+                            <label class="custom-control-label" for="type2">Examen</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-5">
+                            <input type="radio" id="type3" name="type" class="custom-control-input" value="Operacion">
+                            <label class="custom-control-label" for="type3">Operación</label>
+                        </div>
                     </div>
-                    
+
+                    <div class="form-group">
+                        <label for="description">Sintomas</label>
+                        <textarea name="description" id="description" type="text" class="form-control"
+                        rows="5" placeholder="Descripcion breves de sus síntomas.." required></textarea>
+                    </div>
+
                     <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
                 </form>
             </div>
@@ -77,24 +118,5 @@ use Illuminate\Support\Str;
 @section('scripts')
 
 <script src="{{ asset('js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }} "></script>
-<script>
-    let $doctor;
-    $(function(){
-        const $specialty = $('#specialty')
-        $doctor = $('#doctor');
-        $specialty.change(()=>{
-            const specialtyId = $specialty.val();
-            const url = `/especialidades/${specialtyId}/medicos`;
-            $.getJSON(url, onDoctorsLoaded);
-        })
-    });
-
-    function onDoctorsLoaded(doctors){
-        let htmlOptions = '';
-        doctors.forEach(doctor => {
-            htmlOptions += `<option value="${doctor.id}"> ${doctor.name}</option>`;
-        });
-        $doctor.html(htmlOptions);
-    }
-</script>
+<script src="{{ asset('/js/appointments/create.js') }}"></script>
 @endsection
