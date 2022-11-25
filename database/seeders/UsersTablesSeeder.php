@@ -40,7 +40,8 @@ class UsersTablesSeeder extends Seeder
         ]);
 
         User::factory()
-        ->count(30)
+        ->count(50)
+        ->state(['role'=> 'paciente'])
         ->create();
     }
 }
