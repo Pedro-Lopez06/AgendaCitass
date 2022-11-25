@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\HorarioServiceInterface;
 use App\Models\Appointment;
 use App\Models\Speciality;
 use Carbon\Carbon;
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    public function create(){
+    public function create(HorarioServiceInterface $horarioServiceInterface){
         $specialties = Speciality::all();
 
         $specialtyId = old('specialty_id');
@@ -20,7 +21,15 @@ class AppointmentController extends Controller
             $doctors = collect();
         }
 
-        return view('appointments.create', compact('specialties', 'doctors'));
+        $date = old('scheduled_date');
+        $doctorId = old('doctor_id');
+        if($date && $doctorId){
+            $intervals = $horarioServiceInterface->getAvailableIntervals($date, $doctorId);
+        }else{
+            $intervals = null;
+        }
+
+        return view('appointments.create', compact('specialties', 'doctors', 'intervals'));
     }
 
     public function store(Request $request){
@@ -35,7 +44,7 @@ class AppointmentController extends Controller
         ];
 
         $messages = [
-            'scheduled_time.required' => 'Debe seleccionar una hora válida para su cita',
+            'scheduled_time.required' => 'Debe seleccionar una hora para su cita',
             'type.required' => 'Debe seleccionar el tipo de consulta.',
             'description.required' => 'Debe poner sus sintomas.'
         ];

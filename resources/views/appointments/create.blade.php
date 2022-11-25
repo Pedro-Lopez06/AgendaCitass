@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Str;
+use App\Services\HorarioService;
 ?>
 
 @extends('layouts.panel')
@@ -80,16 +81,34 @@ use Illuminate\Support\Str;
                                 <div class="col">
                                     <h4 class="m-3" id="titleMorning"></h4>
                                     <div id="hoursMorning">
-                                        <mark>
-                                            <small class="text-warning" display-5>
-                                                Selecciona un médico y una fecha para ver las horas.
-                                            </small>
-                                        </mark>
+                                        @if($intervals)
+                                            @foreach ($intervals['morning'] as $key => $interval)
+                                            <div class="custom-control custom-radio mb-3">
+                                            <input type="radio" id="intervalMorning{{ $key }}" name="scheduled_time" value="{{ $interval['start']}}" class="custom-control-input">
+                                            <label class="custom-control-label" for="intervalMorning{{ $key }}">{{ $interval['start'] }} - {{ $interval['end'] }}</label>
+                                            </div>
+                                            @endforeach
+                                        @else
+                                            <mark>
+                                                <small class="text-warning" display-5>
+                                                    Selecciona un médico y una fecha para ver las horas.
+                                                </small>
+                                            </mark>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col">
                                     <h4 class="m-3" id="titleAfternoon"></h4>
-                                    <div id="hoursAfternoon"></div>
+                                    <div id="hoursAfternoon">
+                                    @if($intervals)
+                                            @foreach ($intervals['afternoon'] as $key => $interval)
+                                            <div class="custom-control custom-radio mb-3">
+                                            <input type="radio" id="intervalAfternoon{{ $key }}" name="scheduled_time" value="{{ $interval['start']}}" class="custom-control-input">
+                                            <label class="custom-control-label" for="intervalAfternoon{{ $key }}">{{$interval['start']}}-{{$interval['end']}}</label>
+                                            </div>
+                                            @endforeach
+                                    @endif
+                                    </div>
                                 </div>
 
                             </div>

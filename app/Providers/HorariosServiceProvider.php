@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\HorarioServiceInterface;
+use App\Services\HorarioService;
 use Illuminate\Support\ServiceProvider;
 
 class HorariosServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class HorariosServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(HorarioServiceInterface::class,  HorarioService::class);
     }
 
     /**
