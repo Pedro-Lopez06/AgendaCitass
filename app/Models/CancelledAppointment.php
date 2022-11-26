@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class CancelledAppointment extends Model
 {
     use HasFactory;
+
+    public function cancelled_by(){
+        return $this->belongsTo(User::class);
+    }
+
 }

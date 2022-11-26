@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/reservarcita/create', [App\Http\Controllers\AppointmentController::class, 'create']);
     Route::post('/reservarcitas', [App\Http\Controllers\AppointmentController::class, 'store']);
     Route::get('/miscitas', [App\Http\Controllers\AppointmentController::class, 'index']);
+    Route::get('/miscitas/{appointment}', [App\Http\Controllers\AppointmentController::class, 'show']);
     Route::post('/miscitas/{appointment}/cancel', [App\Http\Controllers\AppointmentController::class, 'cancel']);
     Route::get('/miscitas/{appointment}/cancel', [App\Http\Controllers\AppointmentController::class, 'formCancel']);
     //JSON
