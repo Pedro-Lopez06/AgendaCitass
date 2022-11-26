@@ -13,8 +13,17 @@ class AppointmentController extends Controller
 {
 
     public function index(){
-        $appointments = Appointment::all();
-        return view('appointments.index', compact('appointments'));
+        $confirmedAppointments = Appointment::all()
+            ->where('status', 'Confirmada')
+            ->where('patient_id', auth()->id());
+        $pendingAppointments = Appointment::all()
+            ->where('status', 'Reservada')
+            ->where('patient_id', auth()->id());
+        $oldAppointments = Appointment::all()
+            ->whereIn('status', ['Atendida','Cancelada'])
+            ->where('patient_id', auth()->id());
+        return view('appointments.index', compact('confirmedAppointments', 'pendingAppointments', 'oldAppointments'));
+
     }
 
     public function create(HorarioServiceInterface $horarioServiceInterface){
@@ -58,7 +67,7 @@ class AppointmentController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         $validator->after(function ($validator) use ($request, $horarioServiceInterface) {
-            
+
             $date = $request->input('scheduled_date');
             $doctorId = $request-> input('doctor_id');
             $scheduled_time = $request->input('scheduled_time');

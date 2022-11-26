@@ -8,7 +8,7 @@
                     <div class="col">
                         <h3 class="mb-0">Mis Citas</h3>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="card-body">
@@ -17,60 +17,43 @@
                     {{ session('notification') }}!
                 </div>
                 @endif
-            </div>
-            <div class="table-responsive">
-                <!-- Projects table -->
-                <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Descripcion</th>
-                            <th scope="col">Especialidad</th>
-                            <th scope="col">Medico</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Hora</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($appointments as $cita)
-                        <tr>
-                            <th scope="row">
-                                {{ $cita->description}}
-                            </th>
-                            <td>
-                                {{ $cita->specialty->name}}
-                            </td>
-                            <td>
-                                {{ $cita->doctor->name }}
-                            </td>
-                            <td>
-                                {{ $cita->scheduled_date }}
-                            </td>
-                            <td>
-                                {{ $cita->Scheduled_Time_12 }}
-                            </td>
-                            <td>
-                                {{ $cita->type }}
-                            </td>
-                            <td>
-                                {{ $cita->status }}
-                            </td>
-                           
-                            <td>
-                                <form action="{{ url('/miscitas/'.$cita->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
 
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Cancelar cita">Cancelar</button>
-                                </form>
-                            </td>
-                        </tr>
-                            @endforeach
-                    </tbody>
-                </table>
+                <div class="nav-wrapper">
+                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0 active" data-toggle="tab"
+                            href="#mis-citas" role="tab" aria-selected="true">
+                            <i class="ni ni-calendar-grid-58 mr-2"></i>Mis Citas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" data-toggle="tab"
+                            href="#citas-pendientes" role="tab" aria-selected="false">
+                            <i class="ni ni-bell-55 mr-2"></i>Citas Pendientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" data-toggle="tab"
+                            href="#historial" role="tab" aria-selected="false">
+                            <i class="ni ni-folder-17 mr-2"></i>Historial</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            <div class="card shadow">
+                <div class="card">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="mis-citas" role="tabpanel">
+                            @include('appointments.confirmed-appointments')
+                        </div>
+                        <div class="tab-pane fade" id="citas-pendientes" role="tabpanel">
+                            @include('appointments.pending-appointments')
+                        </div>
+                        <div class="tab-pane fade" id="historial" role="tabpanel" >
+                            @include('appointments.old-appointments')
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
 
