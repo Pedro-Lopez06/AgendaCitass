@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\HorarioServiceInterface;
 use App\Models\Appointment;
+use App\Models\CancelledAppointment;
 use App\Models\Speciality;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
@@ -107,5 +109,28 @@ class AppointmentController extends Controller
 
         $notification = 'La cita se ha realizado correctamente';
         return back()->with(compact('notification'));
+    }
+
+    public function cancel(Appointment $appointment, Request $request){
+        if ($request->has('justification')) {
+            $cancellation = new CancelledAppointment();
+            $cancellation->justification = $request->input('justification');
+            $cancellation->cancelled_by = auth()->id();
+
+            $appointment->cancellation()->save($cancellation);
+        }
+        $appointment->status = 'Cancelada';
+        $appointment->save();
+        $notification = 'La cita se a cancelado correctamente.';
+
+        return redirect('/miscitas')->with(compact('notification'));
+
+    }
+
+    public function formCancel(Appointment $appointment){
+        if ($appointment->status == 'Confirmada') {
+            return view('appointments.cancel', compact('appointment'));
+        }
+        return redirect('/miscitas');
     }
 }
