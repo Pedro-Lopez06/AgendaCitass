@@ -5,15 +5,20 @@
             <tr>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Especialidad</th>
-                <th scope="col">Medico</th>
+                @if ($role == 'paciente')
+                    <th scope="col">Medico</th>
+                @elseif ($role == 'doctor')    
+                    <th scope="col">Paciente</th>
+                @endif
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Tipo</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($pendingAppointments as $cita)
+            @foreach ($confirmedAppointments as $cita)
             <tr>
                 <th scope="row">
                     {{ $cita->description}}
@@ -21,9 +26,15 @@
                 <td>
                     {{ $cita->specialty->name}}
                 </td>
-                <td>
-                    {{ $cita->doctor->name }}
-                </td>
+                @if ($role == 'paciente')
+                    <td>
+                        {{ $cita->doctor->name }}
+                    </td>
+                @elseif ($role=='doctor')
+                    <td>
+                        {{ $cita->patient->name }}
+                    </td>
+                @endif
                 <td>
                     {{ $cita->scheduled_date }}
                 </td>
@@ -33,13 +44,15 @@
                 <td>
                     {{ $cita->type }}
                 </td>
+                <td>
+                    {{ $cita->status }}
+                </td>
 
                 <td>
-                    <form action="{{ url('/miscitas/'.$cita->id.'/cancel') }}" method="POST">
-                        @csrf
-
-                        <button type="submit" class="btn btn-sm btn-danger" title="Cancelar cita">Cancelar</button>
-                    </form>
+                    @if ($role == 'admin')
+                    <a href="{{ url('/miscitas/'.$cita->id) }}" class="btn btn-sm btn-info" title="Ver cita">Ver</button>    
+                    @endif
+                    <a href="{{ url('/miscitas/'.$cita->id.'/cancel') }}" class="btn btn-sm btn-danger" title="Cancelar cita">Cancelar</button>
                 </td>
             </tr>
                 @endforeach
