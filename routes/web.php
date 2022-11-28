@@ -36,6 +36,12 @@ Route::resource('medicos','App\Http\Controllers\admin\DoctorController');
 
 // Rutas Pacientes
 Route::resource('pacientes','App\Http\Controllers\admin\PatientController');
+
+//Rutas Reportes
+Route::get('/reportes/citas/line', [App\Http\Controllers\admin\ChartController::class, 'appointments']);
+Route::get('/reportes/doctors/column', [App\Http\Controllers\admin\ChartController::class, 'doctors']);
+
+Route::get('/reportes/doctors/column/data', [App\Http\Controllers\admin\ChartController::class, 'doctorsJson']);
 });
 
 Route::middleware(['auth', 'doctor'])->group(function () {

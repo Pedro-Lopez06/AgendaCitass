@@ -25,7 +25,7 @@ class SpecialtiesTableSeeder extends Seeder
             'Dermatología'
         ];
         foreach ($specialties as $specialtyName){
-           $specialty = Speciality::create([
+        $specialty = Speciality::create([
                 'name'=> $specialtyName
             ]);
             $specialty->users()->saveMany(

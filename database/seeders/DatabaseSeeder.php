@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Factories\AppointmentFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTablesSeeder::class);
         $this->call(SpecialtiesTableSeeder::class);
         $this->call(HorariosTableSeeder::class);
+        $this->call(AppointmentsTableSeeder::class);
     }
 }
