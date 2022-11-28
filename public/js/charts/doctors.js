@@ -53,7 +53,7 @@ function fetchData(){
                 chart.series[1].remove();
                 chart.series[0].remove();
             }
-
+//
             chart.addSeries(myJson.series[0]);//Citas Atendidas
             chart.addSeries(myJson.series[1]);//Citas Canceladas
         });
